@@ -1,0 +1,12 @@
+= Rust DALL.E
+
+The project is a facade that allows calling the OpenAI API.
+
+You can build from source or use the Docker image.
+
+[source,bash]
+----
+docker run -it --rm -p 3000:3000 \
+           -e OPENAI_TOKEN=... \
+           nfrankel/rust-dalle:0.1.0
+----

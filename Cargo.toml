@@ -1,0 +1,15 @@
+[package]
+name = "rust-dalle"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = { version = "0.6.16", features = ["macros", "form"]}
+axum-template = { version = "0.15.1", features = ["minijinja"] }
+reqwest = { version = "0.11.16", features = ["json"] }
+serde = { version = "1.0.160", features = ["derive"] }
+tokio = { version = "1.27.0", features = ["full"] }
+minijinja = { version = "0.31.0", features = ["source"] }
+either = "1.8.1"
