@@ -161,7 +161,7 @@ impl From<(InitialPageState, OpenAiOutput)> for PageState {
     }
 }
 
-async fn call(engine: AppEngine, Form(state): Form<InitialPageState>) -> Response {
+async fn call(engine: AppEngine, Form(state): Form<InitialPageState>) -> impl IntoResponse {
     let client = reqwest::Client::new();
     let endoint = "https://api.openai.com/v1/images/generations";
     let token = env::var("OPENAI_TOKEN");
@@ -178,19 +178,8 @@ async fn call(engine: AppEngine, Form(state): Form<InitialPageState>) -> Respons
         .unwrap();
     let output = response.json::<OpenAiOutput>().await.unwrap();
     let page_state = PageState::from((state, output));
-    if page_state.either.is_left() {
-        RenderHtml(
-            Key("home.html".to_owned()),
-            engine,
-            page_state.either.left().unwrap(),
-        )
-        .into_response()
-    } else {
-        RenderHtml(
-            Key("home.html".to_owned()),
-            engine,
-            page_state.either.right().unwrap(),
-        )
-        .into_response()
+    match page_state.either {
+        Left(data) => Ok(RenderHtml("home.html", engine, data)),
+        Right(data) => Err(RenderHtml("home.html", engine, data)
     }
 }
