@@ -180,6 +180,6 @@ async fn call(engine: AppEngine, Form(state): Form<InitialPageState>) -> impl In
     let page_state = PageState::from((state, output));
     match page_state.either {
         Left(data) => Ok(RenderHtml("home.html", engine, data)),
-        Right(data) => Err(RenderHtml("home.html", engine, data)
+        Right(data) => Err(RenderHtml("home.html", engine, data))
     }
 }
